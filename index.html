@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trang chủ - GIF Demo</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #0f1923;
+      color: #e0e0e0;
+      padding: 40px 20px;
+    }
+    h1 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 40px;
+      color: #00d4ff;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(480px, 1fr));
+      gap: 30px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #1a2634;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      transition: transform 0.2s;
+    }
+    .card:hover { transform: translateY(-4px); }
+    .card img {
+      width: 100%;
+      height: auto;
+      display: block;
+      cursor: pointer;
+    }
+    .card .caption {
+      padding: 14px 18px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #b0c4de;
+      border-top: 1px solid #2a3a4a;
+    }
+    .card .caption .size {
+      font-weight: 400;
+      font-size: 0.8rem;
+      color: #607080;
+      margin-left: 8px;
+    }
+
+    /* Lightbox */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.92);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+    .lightbox.active { display: flex; }
+    .lightbox img {
+      max-width: 95vw;
+      max-height: 95vh;
+      border-radius: 8px;
+    }
+
+    @media (max-width: 560px) {
+      .grid { grid-template-columns: 1fr; }
+      h1 { font-size: 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<h1>Webots Robotics - Demo GIF</h1>
+
+<div class="grid" id="grid"></div>
+
+<div class="lightbox" id="lightbox" onclick="this.classList.remove('active')">
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<script>
+const gifs = [
+  { file: "1 Đăng nhập và làm quen giao diện.gif", title: "Đăng nhập và làm quen giao diện", size: "3.1 MB" },
+  { file: "2 Khám phá Robotics .gif", title: "Khám phá Robotics", size: "68.6 MB" },
+  { file: "3 Thư viện Robot mẫu .gif", title: "Thư viện Robot mẫu", size: "8.2 MB" },
+  { file: "4 CUOC THI.gif", title: "Cuộc thi", size: "4.9 MB" },
+  { file: "5 Mô phỏng thời gian thực .gif", title: "Mô phỏng thời gian thực", size: "14.9 MB" },
+  { file: "7 Tính năng Làm bài tập về nhà.gif", title: "Tính năng Làm bài tập về nhà", size: "8.4 MB" },
+  { file: "8 Lập trình kéo thả mới.gif", title: "Lập trình kéo thả", size: "10.8 MB" },
+  { file: "9 Thi đấu đối kháng trực tuyến.gif", title: "Thi đấu đối kháng trực tuyến", size: "16.8 MB" },
+  { file: "9 Thi đấu đối kháng trực tuyến trọng tài.gif", title: "Thi đấu đối kháng - Trọng tài", size: "2.6 MB" },
+  { file: "10 Thi đấu animation recording.gif", title: "Thi đấu - Animation Recording", size: "6.1 MB" },
+  { file: "10 Thi đấu animation recording trọng tài.gif", title: "Thi đấu Animation Recording - Trọng tài", size: "7.7 MB" },
+  { file: "1 Mo phong sumo.gif", title: "Mô phỏng Sumo", size: "20.2 MB" },
+  { file: "1 mo phong q .gif", title: "Mô phỏng Q", size: "2.5 MB" },
+  { file: "2 thu vien.gif", title: "Thư viện", size: "10.4 MB" },
+  { file: "3 kham pha.gif", title: "Khám phá", size: "5.5 MB" },
+  { file: "5 codekeotha.gif", title: "Code kéo thả", size: "2.5 MB" },
+  { file: "8 Lập trình kéo thả .gif", title: "Lập trình kéo thả (cũ)", size: "11.4 MB" },
+  { file: "nao room.gif", title: "NAO Room", size: "36.4 MB" },
+  { file: "streaming sumo 1.gif", title: "Streaming Sumo", size: "9.6 MB" },
+  { file: "webots_ros_tiago.gif", title: "Webots ROS TIAGo", size: "2.3 MB" },
+];
+
+const grid = document.getElementById('grid');
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+
+gifs.forEach(g => {
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.innerHTML = `
+    <img src="${encodeURI(g.file)}" alt="${g.title}" loading="lazy" onclick="openLightbox(this.src)">
+    <div class="caption">${g.title}<span class="size">${g.size}</span></div>
+  `;
+  grid.appendChild(card);
+});
+
+function openLightbox(src) {
+  lightboxImg.src = src;
+  lightbox.classList.add('active');
+}
+</script>
+
+</body>
+</html>
